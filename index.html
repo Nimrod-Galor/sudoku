@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="./sudoku.css" />
+    <title>Sudoku</title>
+</head>
+<body>
+    <h1>Sudoku</h1>
+    <div class="board">
+        <div class="grid-container-3x3">
+            <div class="grid-item">
+                <div class="grid-container-3x3">
+                    <div class="sudoku-cell" id="1">1</div>
+                    <div class="sudoku-cell" id="2">1</div>
+                    <div class="sudoku-cell" id="3">1</div>
+                    <div class="sudoku-cell" id="4">1</div>
+                    <div class="sudoku-cell" id="5">1</div>
+                    <div class="sudoku-cell" id="6">1</div>
+                    <div class="sudoku-cell" id="7">1</div>
+                    <div class="sudoku-cell" id="8">1</div>
+                    <div class="sudoku-cell" id="9">9</div>
+                </div>
+            </div>
+            <div class="grid-item">
+                <div class="grid-container-3x3">
+                    <div class="sudoku-cell" id="10">1</div>
+                    <div class="sudoku-cell" id="11">1</div>
+                    <div class="sudoku-cell" id="12">1</div>
+                    <div class="sudoku-cell" id="13">1</div>
+                    <div class="sudoku-cell" id="14">1</div>
+                    <div class="sudoku-cell" id="15">1</div>
+                    <div class="sudoku-cell" id="16">1</div>
+                    <div class="sudoku-cell" id="17">1</div>
+                    <div class="sudoku-cell" id="18">9</div>
+                </div>
+            </div>
+            <div class="grid-item">
+                <div class="grid-container-3x3">
+                    <div class="sudoku-cell" id="19">1</div>
+                    <div class="sudoku-cell" id="20">1</div>
+                    <div class="sudoku-cell" id="21">1</div>
+                    <div class="sudoku-cell" id="22">1</div>
+                    <div class="sudoku-cell" id="23">1</div>
+                    <div class="sudoku-cell" id="24">1</div>
+                    <div class="sudoku-cell" id="25">1</div>
+                    <div class="sudoku-cell" id="26">1</div>
+                    <div class="sudoku-cell" id="27">1</div>
+                </div>
+            </div>
+            <div class="grid-item">
+                <div class="grid-container-3x3">
+                    <div class="sudoku-cell" id="28">1</div>
+                    <div class="sudoku-cell" id="29">1</div>
+                    <div class="sudoku-cell" id="30">1</div>
+                    <div class="sudoku-cell selected" id="31"><input type="text"></div>
+                    <div class="sudoku-cell" id="32">1</div>
+                    <div class="sudoku-cell" id="33">1</div>
+                    <div class="sudoku-cell" id="34">1</div>
+                    <div class="sudoku-cell" id="35">1</div>
+                    <div class="sudoku-cell" id="36">1</div>
+                </div>
+            </div>
+            <div class="grid-item">
+                <div class="grid-container-3x3">
+                    <div class="sudoku-cell" id="37">1</div>
+                    <div class="sudoku-cell" id="38">1</div>
+                    <div class="sudoku-cell" id="39">1</div>
+                    <div class="sudoku-cell" id="40">1</div>
+                    <div class="sudoku-cell" id="41">1</div>
+                    <div class="sudoku-cell" id="42">1</div>
+                    <div class="sudoku-cell" id="43">1</div>
+                    <div class="sudoku-cell" id="44">1</div>
+                    <div class="sudoku-cell" id="45">1</div>
+                </div>
+            </div>
+            <div class="grid-item">
+                <div class="grid-container-3x3">
+                    <div class="sudoku-cell" id="46">1</div>
+                    <div class="sudoku-cell" id="47">1</div>
+                    <div class="sudoku-cell" id="48">1</div>
+                    <div class="sudoku-cell" id="49">1</div>
+                    <div class="sudoku-cell" id="50">1</div>
+                    <div class="sudoku-cell" id="51">1</div>
+                    <div class="sudoku-cell" id="52">1</div>
+                    <div class="sudoku-cell" id="53">1</div>
+                    <div class="sudoku-cell" id="54">1</div>
+                </div>
+            </div>
+            <div class="grid-item">
+                <div class="grid-container-3x3">
+                    <div class="sudoku-cell" id="55">1</div>
+                    <div class="sudoku-cell" id="56">1</div>
+                    <div class="sudoku-cell" id="57">1</div>
+                    <div class="sudoku-cell" id="58">1</div>
+                    <div class="sudoku-cell" id="59">1</div>
+                    <div class="sudoku-cell" id="60">1</div>
+                    <div class="sudoku-cell" id="61">1</div>
+                    <div class="sudoku-cell" id="62">1</div>
+                    <div class="sudoku-cell" id="63">1</div>
+                </div>
+            </div>
+            <div class="grid-item">
+                <div class="grid-container-3x3">
+                    <div class="sudoku-cell" id="64">1</div>
+                    <div class="sudoku-cell" id="65">1</div>
+                    <div class="sudoku-cell" id="66">1</div>
+                    <div class="sudoku-cell" id="67">1</div>
+                    <div class="sudoku-cell" id="68">1</div>
+                    <div class="sudoku-cell" id="69">1</div>
+                    <div class="sudoku-cell" id="70">1</div>
+                    <div class="sudoku-cell" id="71">1</div>
+                    <div class="sudoku-cell" id="72">1</div>
+                </div>
+            </div>
+            <div class="grid-item">
+                <div class="grid-container-3x3">
+                    <div class="sudoku-cell" id="73">1</div>
+                    <div class="sudoku-cell" id="74">1</div>
+                    <div class="sudoku-cell" id="75">1</div>
+                    <div class="sudoku-cell" id="76">1</div>
+                    <div class="sudoku-cell" id="77">1</div>
+                    <div class="sudoku-cell" id="78">1</div>
+                    <div class="sudoku-cell" id="79">1</div>
+                    <div class="sudoku-cell" id="80">1</div>
+                    <div class="sudoku-cell" id="81">1</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
