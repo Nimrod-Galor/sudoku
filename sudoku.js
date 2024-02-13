@@ -130,7 +130,7 @@ function userSelectTile(event){
 
 function eventCellBlur(event){
     let selectedCell = document.getElementById(`cell-${userInput.cellIndex}`);
-    selectedCell.classList.remove('selected', 'alert');
+    selectedCell.classList.remove('selected');
     event.target.removeEventListener('keydown', eventKeyDown);
     event.target.removeEventListener('blur', eventCellBlur);
     if(event.target.value === ''){
