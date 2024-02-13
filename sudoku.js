@@ -20,6 +20,7 @@ function draw(){
 }
 
 function initGrid(){
+    document.getElementById("pyro").style.display = "none";
     grid = [];
     for(let i=0; i < 81; i++){
         let row = Math.floor(i / 9);
@@ -99,6 +100,7 @@ function checkSuccess(){
     }
     // success
     // fireworks
+    document.getElementById("pyro").style.display = "block";
     console.log('success');
 }
 
