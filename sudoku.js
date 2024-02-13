@@ -2,16 +2,19 @@ let gridSize = 600;
 let cellSize = gridSize / 9;
 let grid = [];
 let userInput = {
-    cellIndex : undefined
+    cellIndex : undefined,
+    history : [],
+    historyIndex : -1
 };
 
 function draw(){
     for(let i=0; i < 81; i++){
-        console.log(`id: ${i}`);
         if(grid[i].hide === false){
             document.getElementById(`cell-${i}`).innerHTML = grid[i].val;
         }else if(grid[i].userVal != ''){
             document.getElementById(`cell-${i}`).innerHTML = grid[i].userVal;
+        }else{
+            document.getElementById(`cell-${i}`).innerHTML = '';
         }
     }
 }
@@ -83,13 +86,24 @@ function reveal(){
             grid[rnd].hide = false;
             numOftiles -= 1;
         }
-    }while(numOftiles > 0)
+    }while(numOftiles > 0);
+}
+
+function checkSuccess(){
+    gridCopy = grid.filter(a => a.hide);
+
+    for(let i = 0; i < gridCopy.length; i++){
+        if(gridCopy[i].val != gridCopy[i].userVal){
+            return;
+        }
+    }
+    // success
+    // fireworks
+    console.log('success');
 }
 
 function userSelectTile(event){
-    console.log(`target ${event.target.id}`);
     let cellIndex = event.target.id.match(/\d+/)[0];
-
     if(grid[cellIndex].hide === false){
         return;
     }
@@ -98,49 +112,121 @@ function userSelectTile(event){
     let inputObj = document.createElement('input');
     inputObj.type = "text";
     inputObj.id = "userInput";
-    inputObj.addEventListener('blur', (event) => {
-        let selectedCell = document.getElementById(`cell-${userInput.cellIndex}`);
-        selectedCell.classList.remove('selected', 'alert');
-        event.target.remove();
-        draw();
-    });
-    inputObj.addEventListener('keydown', (event) => {
-        let val = Number(event.code.match(/\d/)[0]);
-        switch(val){
-            case 1:
-            case 2:
-            case 3:
-            case 4:
-            case 5:
-            case 6:
-            case 7:
-            case 8:
-            case 9:
-                grid[userInput.cellIndex].userVal = val;
-                let selectedCell = document.getElementById(`cell-${userInput.cellIndex}`);
-                
-                if(document.getElementById("alertError").checked && grid[userInput.cellIndex].val != val){
-                    // alert error
-                    selectedCell.classList.remove('selected');
-                    selectedCell.classList.add('alert');
-                }else{
-                    // remove dome input and class
-                    //event.target.remove();
-                    selectedCell.classList.remove('selected', 'alert');
-                    //draw();
-                    event.target.blur();
-                }
-                
-            break;
-            default:
-                return;
-        }
-    });
+    inputObj.addEventListener('blur', eventCellBlur);
+    inputObj.addEventListener('keydown', eventKeyDown);
+    inputObj.value = grid[cellIndex].userVal;
+    event.target.innerHTML = '';
     event.target.appendChild(inputObj);
-    inputObj.focus();
+    if(grid[cellIndex].userVal === ''){
+        inputObj.focus();
+    }else{
+        inputObj.select();
+    }
+    
     event.target.classList.add('selected');
 
     userInput.cellIndex = cellIndex;
+}
+
+function eventCellBlur(event){
+    let selectedCell = document.getElementById(`cell-${userInput.cellIndex}`);
+    selectedCell.classList.remove('selected', 'alert');
+    event.target.removeEventListener('keydown', eventKeyDown);
+    event.target.removeEventListener('blur', eventCellBlur);
+    if(event.target.value === ''){
+        // user delete value
+        grid[userInput.cellIndex].userVal = '';
+    }
+    event.target.remove();
+    draw();
+}
+
+function updateHistory(cellIndex, newValue){
+    userInput.history.push({cellIndex, oldValue: grid[cellIndex].userVal, newValue, type: 'history'});
+
+    userInput.historyIndex = userInput.history.length - 1;
+    document.getElementById("undoBtn").disabled = false;
+}
+
+function historyUndo(){
+    // update grid
+    let cellIndex = userInput.history[userInput.historyIndex].cellIndex;
+    let oldValue = userInput.history[userInput.historyIndex].oldValue;
+    let newValue = userInput.history[userInput.historyIndex].newValue;
+    grid[cellIndex].userVal = oldValue;
+    // update history
+    userInput.history.push({cellIndex, oldValue: newValue, newValue: oldValue, type: 'undo'});
+    userInput.historyIndex -= 1;
+
+    if(userInput.historyIndex < 0){
+        document.getElementById("undoBtn").disabled = true;
+    }
+    document.getElementById("redoBtn").disabled = false;
+    draw();
+}
+
+function historyRedo(){
+    // update history
+    userInput.historyIndex += 1;
+    // update grid
+    let cellIndex = userInput.history[userInput.historyIndex].cellIndex;
+    //let oldValue = userInput.history[userInput.historyIndex].oldValue;
+    let newValue = userInput.history[userInput.historyIndex].newValue;
+    grid[cellIndex].userVal = newValue;
+    
+    if(userInput.historyIndex >= userInput.history.length || userInput.history[userInput.historyIndex + 1].type === 'undo'){
+        document.getElementById("redoBtn").disabled = true;
+        //userInput.historyIndex = userInput.history.length - 1;
+    }
+    draw();
+}
+
+function eventKeyDown(event){
+    //console.log(event.code);
+    if(event.code === 'Backspace' || event.code === 'Delete'){
+        updateHistory( userInput.cellIndex, '');
+        return;
+    }
+
+    let reg = event.code.match(/\d/);
+    if(reg === null){
+        event.preventDefault();
+        return;
+    }
+    let val = Number(reg[0]);
+    switch(val){
+        case 1:
+        case 2:
+        case 3:
+        case 4:
+        case 5:
+        case 6:
+        case 7:
+        case 8:
+        case 9:
+            updateHistory( userInput.cellIndex, val);
+            grid[userInput.cellIndex].userVal = val;
+            let selectedCell = document.getElementById(`cell-${userInput.cellIndex}`);
+            
+            if(document.getElementById("alertError").checked && grid[userInput.cellIndex].val != val){
+                // alert error
+                selectedCell.classList.remove('selected');
+                selectedCell.classList.add('alert');
+            }else{
+                // remove dome input and class
+                event.target.removeEventListener('keydown', eventKeyDown);
+                event.target.removeEventListener('blur', eventCellBlur);
+                event.target.remove();
+                selectedCell.classList.remove('selected', 'alert');
+                selectedCell.innerHTML = val;
+                checkSuccess();
+            }
+            
+        break;
+        default:
+            event.preventDefault();
+            return;
+    }
 }
 
 function randomFromArray(arr){

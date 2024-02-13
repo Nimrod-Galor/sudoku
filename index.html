@@ -135,16 +135,23 @@
                 </div>
             </main>
             <nav>
-                <div class="navItem">
-                    <label for="reveal">Number of tiles to reveal: </label>
-                    <input type="number" min="1" max="81" id="reveal" name="reveal" value="40" class="form-control" />
-                </div>
+                
                 <div class="navItem">
                     <input type="checkbox" id="alertError" name="alertError" class="form-check-input" />
                     <label for="alertError">Alert errors.</label>
                 </div>
-                <div class="navItem bottom">
-                    <button type="button" class="btn" onclick="initGrid()">Generate Sudoku</button>
+                <div class="navItem grid_1_1">
+                    <button id="undoBtn" class="history-btn" onclick="historyUndo()" title="Undo" disabled>Undo</button>
+                    <button id="redoBtn" class="history-btn" onclick="historyRedo()" title="Redo" disabled>Redo</button>
+                </div>
+                <div class="bottom">
+                    <div class="navItem">
+                        <label for="reveal">Number of tiles to reveal: </label>
+                        <input type="number" min="1" max="81" id="reveal" name="reveal" value="40" class="form-control" />
+                    </div>
+                    <div class="navItem">
+                        <button type="button" class="btn" onclick="initGrid()">Generate Sudoku</button>
+                    </div>
                 </div>
             </nav>
         </div>
