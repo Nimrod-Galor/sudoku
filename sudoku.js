@@ -229,6 +229,21 @@ function eventKeyDown(event){
     }
 }
 
+function alertError(event){
+    console.log(`alertError: ${event.target.checked}`);
+
+    for(let i =0; i < grid.length; i++){
+        if(grid[i].hide & grid[i].userVal != '' & grid[i].userVal != grid[i].val){
+            //error
+            if(event.target.checked){
+                document.getElementById(`cell-${i}`).classList.add('alert');
+            }else{
+                document.getElementById(`cell-${i}`).classList.remove('alert');
+            }
+        }
+    }
+}
+
 function randomFromArray(arr){
     let index = randomFromRange(0, arr.length - 1);
     return arr[index];

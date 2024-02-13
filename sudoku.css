@@ -20,7 +20,7 @@
     background-repeat: no-repeat;
     background-size: 50% 50%, 50% 50%;
     background-position: 0 0, 100% 0, 100% 100%, 0 100%;
-    background-image: linear-gradient(#fbb300, #fbb300), linear-gradient(#d53e33, #d53e33), linear-gradient(#fbb300, #fbb300), linear-gradient(#d53e33, #d53e33);
+    background-image: linear-gradient(#fbb300, #d53e33), linear-gradient(#d53e33, #fbb300), linear-gradient(#fbb300, #d53e33), linear-gradient(#d53e33, #fbb300);
     animation: rotate 4s linear infinite;
 }
 
