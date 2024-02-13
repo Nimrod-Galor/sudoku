@@ -70,6 +70,7 @@ nav {
 main{
     text-align: center;
     margin-bottom: 25px;
+    box-shadow: #a1a1a1 5px 5px 20px;
 }
 
 .board{
@@ -201,10 +202,18 @@ main{
 }
 
 @media screen and (min-width: 600px) {
+
+    .wrapper-center{
+        padding: 15px;
+        border: 1px solid #000;
+        border-radius: 5px;
+        box-shadow: #000 5px 5px 20px;
+    }
+
     .grid_1_2{
         display: grid;
         grid-template-columns: 2fr 1fr;
-        gap: 20px;
+        gap: 25px;
     }
     
     .sudoku-cell{

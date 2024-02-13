@@ -108,6 +108,11 @@ function userSelectTile(event){
         return;
     }
 
+    createInputTile(cellIndex);
+}
+
+function createInputTile(cellIndex){
+    let tile = document.getElementById(`cell-${cellIndex}`)
     // update dom element and class from current selection
     let inputObj = document.createElement('input');
     inputObj.type = "text";
@@ -115,15 +120,15 @@ function userSelectTile(event){
     inputObj.addEventListener('blur', eventCellBlur);
     inputObj.addEventListener('keydown', eventKeyDown);
     inputObj.value = grid[cellIndex].userVal;
-    event.target.innerHTML = '';
-    event.target.appendChild(inputObj);
+    tile.innerHTML = '';
+    tile.appendChild(inputObj);
     if(grid[cellIndex].userVal === ''){
         inputObj.focus();
     }else{
         inputObj.select();
     }
-    
-    event.target.classList.add('selected');
+
+    tile.classList.add('selected');
 
     userInput.cellIndex = cellIndex;
 }
@@ -182,19 +187,22 @@ function historyRedo(){
 }
 
 function eventKeyDown(event){
-    //console.log(event.code);
-    if(event.code === 'Backspace' || event.code === 'Delete'){
-        updateHistory( userInput.cellIndex, '');
-        return;
-    }
-
+    console.log(event.code);
+    // if(event.code === 'Backspace' || event.code === 'Delete'){
+    //     updateHistory( userInput.cellIndex, '');
+    //     return;
+    // }
+    let val = event.code;
     let reg = event.code.match(/\d/);
-    if(reg === null){
-        event.preventDefault();
-        return;
+    if(reg != null){
+        val = Number(reg[0]);
     }
-    let val = Number(reg[0]);
+    
     switch(val){
+        case 'Backspace':
+        case 'Delete':
+            updateHistory( userInput.cellIndex, '');
+        break;
         case 1:
         case 2:
         case 3:
@@ -223,10 +231,48 @@ function eventKeyDown(event){
             }
             
         break;
+        case 'ArrowLeft':
+            getNextFreeCell(-1);
+        break;
+        case 'ArrowUp':
+            getNextFreeCell(-9);
+        break;
+        case 'ArrowRight':
+            getNextFreeCell(1);
+        break;
+        case 'ArrowDown':
+            getNextFreeCell(9);
+        break;
         default:
             event.preventDefault();
             return;
     }
+}
+
+function getNextFreeCell(step){
+    //remove curen selected cell class
+    document.getElementById(`userInput`).blur();
+    // find next free tile index
+    let index = Number(userInput.cellIndex);
+    do{
+        index += step;
+
+        if(index < 0){
+            if(step === -1){// cols
+                index = 80;
+            }else{// rows
+                index += 81;
+            }
+        }else if(index > 80){
+            if(step === 1){// cols
+                index = 0;
+            }else{// rows
+                index -= 81;
+            }
+        }
+    }while(!grid[index].hide || grid[index].userVal != '');
+
+    createInputTile(index);
 }
 
 function alertError(event){
