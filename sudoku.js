@@ -203,6 +203,7 @@ function eventKeyDown(event){
     switch(val){
         case 'Backspace':
         case 'Delete':
+            document.getElementById(`cell-${userInput.cellIndex}`).classList.remove('alert');
             updateHistory( userInput.cellIndex, '');
         break;
         case 1:
@@ -281,13 +282,13 @@ function alertError(event){
     console.log(`alertError: ${event.target.checked}`);
 
     for(let i =0; i < grid.length; i++){
-        if(grid[i].hide & grid[i].userVal != '' & grid[i].userVal != grid[i].val){
-            //error
-            if(event.target.checked){
+        if(event.target.checked){
+            if(grid[i].hide & grid[i].userVal != '' & grid[i].userVal != grid[i].val){
+                //error
                 document.getElementById(`cell-${i}`).classList.add('alert');
-            }else{
-                document.getElementById(`cell-${i}`).classList.remove('alert');
             }
+        }else{
+            document.getElementById(`cell-${i}`).classList.remove('alert');
         }
     }
 }
