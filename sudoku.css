@@ -1,15 +1,90 @@
-*{
-    box-sizing: border-box;
+*, *::before, *::after {
+	box-sizing: border-box;
 }
+
+
+
+
+.alert {
+	position: relative;
+	z-index: 0;
+	overflow: hidden;
+	padding: 2rem;
+}
+.alert::before {
+    content: '';
+    position: absolute;
+    z-index: -2;
+    left: -50%;
+    top: -50%;
+    width: 200%;
+    height: 200%;
+    background-color: #399953;
+    background-repeat: no-repeat;
+    background-size: 50% 50%, 50% 50%;
+    background-position: 0 0, 100% 0, 100% 100%, 0 100%;
+    background-image: linear-gradient(#fbb300, #fbb300), linear-gradient(#d53e33, #d53e33), linear-gradient(#fbb300, #fbb300), linear-gradient(#d53e33, #d53e33);
+    animation: rotate 4s linear infinite;
+}
+
+@keyframes rotate {
+	100% {
+		transform: rotate(1turn);
+	}
+}
+
+.alert::after {
+    content: '';
+    position: absolute;
+    z-index: -1;
+    left: 6px;
+    top: 6px;
+    width: calc(100% - 12px);
+    height: calc(100% - 12px);
+    background: white;
+    border-radius: 5px;
+   /* animation: opacityChange 3s infinite alternate;*/
+}
+
+
+
+@keyframes opacityChange {
+	50% {
+		opacity:1;
+	}
+	100% {
+		opacity: .5;
+	}
+}
+
+
+
+
+
+
+
 
 h1{
     text-align: center;
 }
 
-.board{
+.wrapper-center{
     width:96%;
-    max-width: 600px;
+    max-width: 900px;
     margin: 0 auto;
+}
+
+nav {
+    position: relative;
+    padding-bottom: 40px;
+}
+
+main{
+    text-align: center;
+    margin-bottom: 25px;
+}
+
+.board{
     border: 2px solid #000;
 }
 
@@ -29,6 +104,7 @@ h1{
     font-size: 30px;
     font-weight: bold;
     padding: 4px;
+    height: 64px;
 }
 
 .sudoku-cell.selected{
@@ -36,7 +112,7 @@ h1{
     padding: 0;
 }
 
-.sudoku-cell.selected input:focus{
+.sudoku-cell.selected input, .sudoku-cell.selected input:focus, .sudoku-cell.alert input, .sudoku-cell.alert input:focus{
     width:100%;
     height: 100%;
     border: 0 none;
@@ -46,8 +122,112 @@ h1{
     outline: none;
 }
 
+.btn {
+    width:100%;
+    display: inline-block;
+    font-weight: 400;
+    line-height: 1.5;
+    color: #fff;
+    text-align: center;
+    text-decoration: none;
+    vertical-align: middle;
+    cursor: pointer;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    user-select: none;
+    background-color: #0d6efd;
+    border: 1px solid #0d6efd;
+    padding: .375rem .75rem;
+    font-size: 1rem;
+    border-radius: .25rem;
+    transition: color .15s ease-in-out,background-color .15s ease-in-out,border-color .15s ease-in-out,box-shadow .15s ease-in-out;
+}
+
+.btn:hover {
+    color: #fff;
+    background-color: #0b5ed7;
+    border-color: #0a58ca;
+}
+
+.form-control {
+	display: block;
+	width: 100%;
+	padding: .375rem .75rem;
+	font-size: 1rem;
+	font-weight: 400;
+	line-height: 1.5;
+	color: #212529;
+	background-color: #fff;
+	background-clip: padding-box;
+	border: 1px solid #ced4da;
+	-webkit-appearance: none;
+	-moz-appearance: none;
+	appearance: none;
+	border-radius: .25rem;
+	transition: border-color .15s ease-in-out,box-shadow .15s ease-in-out;
+}
+
+.form-control:focus {
+	color: #212529;
+	background-color: #fff;
+	border-color: #86b7fe;
+	outline: 0;
+	box-shadow: 0 0 0 .25rem rgba(13,110,253,.25);
+}
+
+.form-check-input {
+	width: 1em;
+	height: 1em;
+	margin-top: .25em;
+	vertical-align: top;
+	background-color: #fff;
+	background-repeat: no-repeat;
+	background-position: center;
+	background-size: contain;
+	border: 1px solid rgba(0,0,0,.25);
+	-webkit-appearance: none;
+	-moz-appearance: none;
+	appearance: none;
+	-webkit-print-color-adjust: exact;
+	color-adjust: exact;
+}
+
+.form-check-input[type="checkbox"] {
+	border-radius: .25em;
+}
+
+.form-check-input:checked {
+	background-color: #0d6efd;
+	border-color: #0d6efd;
+}
+
+.form-check-input:checked[type="checkbox"] {
+	background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20'%3e%3cpath fill='none' stroke='%23fff' stroke-linecap='round' stroke-linejoin='round' stroke-width='3' d='M6 10l3 3l6-6'/%3e%3c/svg%3e");
+}
+
+.bottom{
+    position: unset;
+    bottom: 15px;
+    width:100%;
+    margin-top: 30px;
+}
+
 @media screen and (min-width: 600px) {
+    .grid_1_2{
+        display: grid;
+        grid-template-columns: 2fr 1fr;
+        gap: 20px;
+    }
+    
     .sudoku-cell{
         line-height: 50px;
-    }   
+    }
+
+    main{
+        margin-bottom: auto;
+    }
+
+    .bottom{
+        position: absolute;
+    }
 }
