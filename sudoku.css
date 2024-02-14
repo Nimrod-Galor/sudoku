@@ -99,6 +99,7 @@ main{
 .sudoku-cell.selected{
     border:4px solid gold;
     padding: 0;
+    box-shadow: #a1a1a1 4px 4px 6px;
 }
 
 .sudoku-cell.selected input, .sudoku-cell.selected input:focus, .sudoku-cell.alert input, .sudoku-cell.alert input:focus{
