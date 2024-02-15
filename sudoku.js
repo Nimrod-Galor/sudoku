@@ -111,18 +111,40 @@ function userSelectTile(event){
         return;
     }
 
+    userInput.cellIndex = cellIndex;
+
+    createSelectedTile();
+}
+
+function createSelectedTile(){
+    // get selected tile
+    let tile = document.getElementById(`cell-${userInput.cellIndex}`);
+
     if(document.getElementById("numPad").checked){
         // use embeded numpad
-        let tile = document.getElementById(`cell-${cellIndex}`);
-        tile.classList.add('selected');
         tile.addEventListener('blur', eventTileBlur);
         tile.addEventListener('keydown', eventKeyDown);
         tile.focus();
         highlightCellValue(tile);
-        userInput.cellIndex = cellIndex;
     }else{
-        createInputTile(cellIndex);
+        // create input element
+        let inputObj = document.createElement('input');
+        inputObj.type = "text";
+        inputObj.id = "userInput";
+        inputObj.addEventListener('blur', eventCellInputBlur);
+        inputObj.addEventListener('keydown', eventKeyDown);
+        inputObj.value = grid[userInput.cellIndex].userVal;
+        // update selected tile with created input
+        tile.innerHTML = '';
+        tile.appendChild(inputObj);
+        if(grid[userInput.cellIndex].userVal === ''){
+            inputObj.focus();
+        }else{
+            inputObj.select();
+        }
     }
+
+    tile.classList.add('selected');
 }
 
 function eventTileBlur(event){
@@ -131,39 +153,101 @@ function eventTileBlur(event){
     event.target.removeEventListener('keydown', eventKeyDown);
 }
 
-function createInputTile(cellIndex){
-    let tile = document.getElementById(`cell-${cellIndex}`);
-    // update dom element and class from current selection
-    let inputObj = document.createElement('input');
-    inputObj.type = "text";
-    inputObj.id = "userInput";
-    inputObj.addEventListener('blur', eventCellInputBlur);
-    inputObj.addEventListener('keydown', eventKeyDown);
-    inputObj.value = grid[cellIndex].userVal;
-    tile.innerHTML = '';
-    tile.appendChild(inputObj);
-    if(grid[cellIndex].userVal === ''){
-        inputObj.focus();
-    }else{
-        inputObj.select();
-    }
-
-    tile.classList.add('selected');
-
-    userInput.cellIndex = cellIndex;
-}
-
 function eventCellInputBlur(event){
-    let selectedCell = document.getElementById(`cell-${userInput.cellIndex}`);
-    selectedCell.classList.remove('selected');
+    document.getElementById(`cell-${userInput.cellIndex}`).classList.remove('selected');
     event.target.removeEventListener('keydown', eventKeyDown);
     event.target.removeEventListener('blur', eventCellInputBlur);
-    // if(event.target.value === ''){
-    //     // user delete value
-    //     grid[userInput.cellIndex].userVal = '';
-    // }
     event.target.remove();
-    //draw();
+}
+
+function eventKeyDown(event){
+    console.log(event.code);
+    let val = event.code;
+    let reg = event.code.match(/\d/);
+    if(reg != null){
+        val = Number(reg[0]);
+    }
+    
+    switch(val){
+        case 'Backspace':
+        case 'Delete':
+            updateValue('');
+        break;
+        case 1:
+        case 2:
+        case 3:
+        case 4:
+        case 5:
+        case 6:
+        case 7:
+        case 8:
+        case 9:
+            updateValue(val);
+        break;
+        case 'ArrowLeft':
+            getNextFreeCell(-1);
+        break;
+        case 'ArrowUp':
+            getNextFreeCell(-9);
+        break;
+        case 'ArrowRight':
+            getNextFreeCell(1);
+        break;
+        case 'ArrowDown':
+            getNextFreeCell(9);
+        break;
+        default:
+            event.preventDefault();
+            return;
+    }
+
+    event.target.blur();
+    draw();
+}
+
+function clickNumpad(event){
+    console.log(`key: ${event.target.dataset.key}`);
+    if(userInput.cellIndex){
+        updateValue(event.target.dataset.key);
+        //event.target.blur();
+        draw();
+        userInput.cellIndex = undefined;
+    }
+}
+
+function updateValue(val){
+    updateHistory( userInput.cellIndex, val);
+    grid[userInput.cellIndex].userVal = val;
+    document.getElementById(`cell-${userInput.cellIndex}`).classList.remove('selected');
+    //userInput.cellIndex = undefined;
+    checkSuccess();
+}
+
+function getNextFreeCell(step){
+    //remove curen selected cell class
+    document.getElementById(`userInput`)?.blur();
+    // find next free tile index
+    let index = Number(userInput.cellIndex);
+    do{
+        index += step;
+
+        if(index < 0){
+            if(step === -1){// cols
+                index = 80;
+            }else{// rows
+                index += 81;
+            }
+        }else if(index > 80){
+            if(step === 1){// cols
+                index = 0;
+            }else{// rows
+                index -= 81;
+            }
+        }
+    }while(!grid[index].hide || grid[index].userVal != '');
+
+    userInput.cellIndex = index;
+    createSelectedTile();
 }
 
 function updateHistory(cellIndex, newValue){
@@ -204,120 +288,6 @@ function historyRedo(){
         //userInput.historyIndex = userInput.history.length - 1;
     }
     draw();
-}
-
-function eventKeyDown(event){
-    console.log(event.code);
-    let val = event.code;
-    let reg = event.code.match(/\d/);
-    if(reg != null){
-        val = Number(reg[0]);
-    }
-    
-    switch(val){
-        case 'Backspace':
-        case 'Delete':
-            document.getElementById(`cell-${userInput.cellIndex}`).classList.remove('selected', 'alert');
-            grid[userInput.cellIndex].userVal = '';
-            updateHistory(userInput.cellIndex, '');
-        break;
-        case 1:
-        case 2:
-        case 3:
-        case 4:
-        case 5:
-        case 6:
-        case 7:
-        case 8:
-        case 9:
-            updateValue(val);
-        break;
-        case 'ArrowLeft':
-            getNextFreeCell(-1);
-        break;
-        case 'ArrowUp':
-            getNextFreeCell(-9);
-        break;
-        case 'ArrowRight':
-            getNextFreeCell(1);
-        break;
-        case 'ArrowDown':
-            getNextFreeCell(9);
-        break;
-        default:
-            event.preventDefault();
-            return;
-    }
-
-    // if(event.target.nodeName === 'DIV'){
-    //     event.target.blur();
-    // }
-
-    event.target.blur();
-    draw();
-}
-
-function updateValue(val){
-    updateHistory( userInput.cellIndex, val);
-    grid[userInput.cellIndex].userVal = val;
-    let selectedCell = document.getElementById(`cell-${userInput.cellIndex}`);
-    selectedCell.classList.remove('selected');
-    //userInput.cellIndex = undefined;
-    checkSuccess();
-    // if(document.getElementById("alertError").checked && grid[userInput.cellIndex].val != val){
-    //     // alert error
-    //     selectedCell.classList.remove('selected');
-    //     selectedCell.classList.add('alert');
-    // }else{
-    //     // remove dome input and class
-    //     let inputObj = document.getElementById("userInput");
-    //     if(inputObj){
-    //         inputObj.removeEventListener('keydown', eventKeyDown);
-    //         inputObj.removeEventListener('blur', eventCellInputBlur);
-    //         inputObj.remove();
-    //     }
-    //     selectedCell.classList.remove('selected', 'alert');
-    //     selectedCell.innerHTML = val;
-    //     userInput.cellIndex = undefined;
-    //     checkSuccess();
-    // }
-}
-
-function getNextFreeCell(step){
-    //remove curen selected cell class
-    document.getElementById(`userInput`).blur();
-    // find next free tile index
-    let index = Number(userInput.cellIndex);
-    do{
-        index += step;
-
-        if(index < 0){
-            if(step === -1){// cols
-                index = 80;
-            }else{// rows
-                index += 81;
-            }
-        }else if(index > 80){
-            if(step === 1){// cols
-                index = 0;
-            }else{// rows
-                index -= 81;
-            }
-        }
-    }while(!grid[index].hide || grid[index].userVal != '');
-
-    createInputTile(index);
-}
-
-
-function clickNumpad(event){
-    console.log(`key: ${event.target.dataset.key}`);
-    if(userInput.cellIndex){
-        updateValue(event.target.dataset.key);
-        event.target.blur();
-        draw();
-        userInput.cellIndex = undefined;
-    }
 }
 
 function alertErrors(){
