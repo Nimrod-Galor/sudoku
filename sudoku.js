@@ -17,6 +17,7 @@ function draw(){
             document.getElementById(`cell-${i}`).innerHTML = '';
         }
     }
+    alertErrors();
 }
 
 function initGrid(){
@@ -260,24 +261,26 @@ function updateValue(val){
     updateHistory( userInput.cellIndex, val);
     grid[userInput.cellIndex].userVal = val;
     let selectedCell = document.getElementById(`cell-${userInput.cellIndex}`);
-    
-    if(document.getElementById("alertError").checked && grid[userInput.cellIndex].val != val){
-        // alert error
-        selectedCell.classList.remove('selected');
-        selectedCell.classList.add('alert');
-    }else{
-        // remove dome input and class
-        let inputObj = document.getElementById("userInput");
-        if(inputObj){
-            inputObj.removeEventListener('keydown', eventKeyDown);
-            inputObj.removeEventListener('blur', eventCellInputBlur);
-            inputObj.remove();
-        }
-        selectedCell.classList.remove('selected', 'alert');
-        selectedCell.innerHTML = val;
-        userInput.cellIndex = undefined;
-        checkSuccess();
-    }
+    selectedCell.classList.remove('selected');
+    //userInput.cellIndex = undefined;
+    checkSuccess();
+    // if(document.getElementById("alertError").checked && grid[userInput.cellIndex].val != val){
+    //     // alert error
+    //     selectedCell.classList.remove('selected');
+    //     selectedCell.classList.add('alert');
+    // }else{
+    //     // remove dome input and class
+    //     let inputObj = document.getElementById("userInput");
+    //     if(inputObj){
+    //         inputObj.removeEventListener('keydown', eventKeyDown);
+    //         inputObj.removeEventListener('blur', eventCellInputBlur);
+    //         inputObj.remove();
+    //     }
+    //     selectedCell.classList.remove('selected', 'alert');
+    //     selectedCell.innerHTML = val;
+    //     userInput.cellIndex = undefined;
+    //     checkSuccess();
+    // }
 }
 
 function getNextFreeCell(step){
@@ -313,16 +316,15 @@ function clickNumpad(event){
         updateValue(event.target.dataset.key);
         event.target.blur();
         draw();
+        userInput.cellIndex = undefined;
     }
 }
 
-function alertErrors(event){
+function alertErrors(){
+    let showAlerts = document.getElementById('alertError').checked;
     for(let i =0; i < grid.length; i++){
-        if(event.target.checked){
-            if(grid[i].hide & grid[i].userVal != '' & grid[i].userVal != grid[i].val){
-                //error
-                document.getElementById(`cell-${i}`).classList.add('alert');
-            }
+        if(showAlerts && grid[i].hide && grid[i].userVal != '' && grid[i].userVal != grid[i].val){//error
+            document.getElementById(`cell-${i}`).classList.add('alert');
         }else{
             document.getElementById(`cell-${i}`).classList.remove('alert');
         }
