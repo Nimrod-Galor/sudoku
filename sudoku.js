@@ -110,16 +110,33 @@ function userSelectTile(event){
         return;
     }
 
-    createInputTile(cellIndex);
+    if(document.getElementById("numPad").checked){
+        // use embeded numpad
+        let tile = document.getElementById(`cell-${cellIndex}`);
+        tile.classList.add('selected');
+        tile.addEventListener('blur', tileBlur);
+        tile.addEventListener('keydown', eventKeyDown);
+        tile.focus();
+        highlightCellValue(tile);
+        userInput.cellIndex = cellIndex;
+    }else{
+        createInputTile(cellIndex);
+    }
+}
+
+function tileBlur(event){
+    event.target.classList.remove("selected");
+    event.target.removeEventListener('blur', tileBlur);
+    event.target.removeEventListener('keydown', eventKeyDown);
 }
 
 function createInputTile(cellIndex){
-    let tile = document.getElementById(`cell-${cellIndex}`)
+    let tile = document.getElementById(`cell-${cellIndex}`);
     // update dom element and class from current selection
     let inputObj = document.createElement('input');
     inputObj.type = "text";
     inputObj.id = "userInput";
-    inputObj.addEventListener('blur', eventCellBlur);
+    inputObj.addEventListener('blur', eventCellInputBlur);
     inputObj.addEventListener('keydown', eventKeyDown);
     inputObj.value = grid[cellIndex].userVal;
     tile.innerHTML = '';
@@ -135,11 +152,11 @@ function createInputTile(cellIndex){
     userInput.cellIndex = cellIndex;
 }
 
-function eventCellBlur(event){
+function eventCellInputBlur(event){
     let selectedCell = document.getElementById(`cell-${userInput.cellIndex}`);
     selectedCell.classList.remove('selected');
     event.target.removeEventListener('keydown', eventKeyDown);
-    event.target.removeEventListener('blur', eventCellBlur);
+    event.target.removeEventListener('blur', eventCellInputBlur);
     if(event.target.value === ''){
         // user delete value
         grid[userInput.cellIndex].userVal = '';
@@ -190,10 +207,6 @@ function historyRedo(){
 
 function eventKeyDown(event){
     console.log(event.code);
-    // if(event.code === 'Backspace' || event.code === 'Delete'){
-    //     updateHistory( userInput.cellIndex, '');
-    //     return;
-    // }
     let val = event.code;
     let reg = event.code.match(/\d/);
     if(reg != null){
@@ -215,24 +228,7 @@ function eventKeyDown(event){
         case 7:
         case 8:
         case 9:
-            updateHistory( userInput.cellIndex, val);
-            grid[userInput.cellIndex].userVal = val;
-            let selectedCell = document.getElementById(`cell-${userInput.cellIndex}`);
-            
-            if(document.getElementById("alertError").checked && grid[userInput.cellIndex].val != val){
-                // alert error
-                selectedCell.classList.remove('selected');
-                selectedCell.classList.add('alert');
-            }else{
-                // remove dome input and class
-                event.target.removeEventListener('keydown', eventKeyDown);
-                event.target.removeEventListener('blur', eventCellBlur);
-                event.target.remove();
-                selectedCell.classList.remove('selected', 'alert');
-                selectedCell.innerHTML = val;
-                checkSuccess();
-            }
-            
+            updateValue(val);
         break;
         case 'ArrowLeft':
             getNextFreeCell(-1);
@@ -249,6 +245,34 @@ function eventKeyDown(event){
         default:
             event.preventDefault();
             return;
+    }
+
+    if(event.target.nodeName === 'DIV'){
+        event.target.blur();
+    }
+}
+
+function updateValue(val){
+    updateHistory( userInput.cellIndex, val);
+    grid[userInput.cellIndex].userVal = val;
+    let selectedCell = document.getElementById(`cell-${userInput.cellIndex}`);
+    
+    if(document.getElementById("alertError").checked && grid[userInput.cellIndex].val != val){
+        // alert error
+        selectedCell.classList.remove('selected');
+        selectedCell.classList.add('alert');
+    }else{
+        // remove dome input and class
+        let inputObj = document.getElementById("userInput");
+        if(inputObj){
+            inputObj.removeEventListener('keydown', eventKeyDown);
+            inputObj.removeEventListener('blur', eventCellInputBlur);
+            inputObj.remove();
+        }
+        selectedCell.classList.remove('selected', 'alert');
+        selectedCell.innerHTML = val;
+        userInput.cellIndex = undefined;
+        checkSuccess();
     }
 }
 
@@ -279,8 +303,6 @@ function getNextFreeCell(step){
 }
 
 function alertError(event){
-    console.log(`alertError: ${event.target.checked}`);
-
     for(let i =0; i < grid.length; i++){
         if(event.target.checked){
             if(grid[i].hide & grid[i].userVal != '' & grid[i].userVal != grid[i].val){
@@ -293,6 +315,21 @@ function alertError(event){
     }
 }
 
+function toggleNumpad(event){
+    if(event.target.checked){
+        document.getElementById("numpad").classList.add('open');
+    }else{
+        document.getElementById("numpad").classList.remove('open');
+    }
+}
+
+function clickNumpad(event){
+    console.log(`key: ${event.target.dataset.key}`);
+    if(userInput.cellIndex){
+        updateValue(event.target.dataset.key);
+    }
+}
+
 function randomFromArray(arr){
     let index = randomFromRange(0, arr.length - 1);
     return arr[index];
@@ -300,6 +337,22 @@ function randomFromArray(arr){
 
 function randomFromRange(min, max){
     return Math.round(Math.random() * (max - min) + min);
+}
+
+function highlightCellValue(node){
+    if (document.body.createTextRange) {
+        const range = document.body.createTextRange();
+        range.moveToElementText(node);
+        range.select();
+    } else if (window.getSelection) {
+        const selection = window.getSelection();
+        const range = document.createRange();
+        range.selectNodeContents(node);
+        selection.removeAllRanges();
+        selection.addRange(range);
+    } else {
+        console.warn("Could not select text in node: Unsupported browser.");
+    }
 }
 
 addEventListener("DOMContentLoaded", (event) => {initGrid()});
