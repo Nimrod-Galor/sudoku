@@ -114,7 +114,7 @@ function userSelectTile(event){
         // use embeded numpad
         let tile = document.getElementById(`cell-${cellIndex}`);
         tile.classList.add('selected');
-        tile.addEventListener('blur', tileBlur);
+        tile.addEventListener('blur', eventTileBlur);
         tile.addEventListener('keydown', eventKeyDown);
         tile.focus();
         highlightCellValue(tile);
@@ -124,9 +124,9 @@ function userSelectTile(event){
     }
 }
 
-function tileBlur(event){
+function eventTileBlur(event){
     event.target.classList.remove("selected");
-    event.target.removeEventListener('blur', tileBlur);
+    event.target.removeEventListener('blur', eventTileBlur);
     event.target.removeEventListener('keydown', eventKeyDown);
 }
 
@@ -157,12 +157,12 @@ function eventCellInputBlur(event){
     selectedCell.classList.remove('selected');
     event.target.removeEventListener('keydown', eventKeyDown);
     event.target.removeEventListener('blur', eventCellInputBlur);
-    if(event.target.value === ''){
-        // user delete value
-        grid[userInput.cellIndex].userVal = '';
-    }
+    // if(event.target.value === ''){
+    //     // user delete value
+    //     grid[userInput.cellIndex].userVal = '';
+    // }
     event.target.remove();
-    draw();
+    //draw();
 }
 
 function updateHistory(cellIndex, newValue){
@@ -216,8 +216,9 @@ function eventKeyDown(event){
     switch(val){
         case 'Backspace':
         case 'Delete':
-            document.getElementById(`cell-${userInput.cellIndex}`).classList.remove('alert');
-            updateHistory( userInput.cellIndex, '');
+            document.getElementById(`cell-${userInput.cellIndex}`).classList.remove('selected', 'alert');
+            grid[userInput.cellIndex].userVal = '';
+            updateHistory(userInput.cellIndex, '');
         break;
         case 1:
         case 2:
@@ -247,9 +248,12 @@ function eventKeyDown(event){
             return;
     }
 
-    if(event.target.nodeName === 'DIV'){
-        event.target.blur();
-    }
+    // if(event.target.nodeName === 'DIV'){
+    //     event.target.blur();
+    // }
+
+    event.target.blur();
+    draw();
 }
 
 function updateValue(val){
@@ -302,7 +306,17 @@ function getNextFreeCell(step){
     createInputTile(index);
 }
 
-function alertError(event){
+
+function clickNumpad(event){
+    console.log(`key: ${event.target.dataset.key}`);
+    if(userInput.cellIndex){
+        updateValue(event.target.dataset.key);
+        event.target.blur();
+        draw();
+    }
+}
+
+function alertErrors(event){
     for(let i =0; i < grid.length; i++){
         if(event.target.checked){
             if(grid[i].hide & grid[i].userVal != '' & grid[i].userVal != grid[i].val){
@@ -320,13 +334,6 @@ function toggleNumpad(event){
         document.getElementById("numpad").classList.add('open');
     }else{
         document.getElementById("numpad").classList.remove('open');
-    }
-}
-
-function clickNumpad(event){
-    console.log(`key: ${event.target.dataset.key}`);
-    if(userInput.cellIndex){
-        updateValue(event.target.dataset.key);
     }
 }
 
