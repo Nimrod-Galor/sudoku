@@ -73,7 +73,7 @@ h1{
 
 nav {
     position: relative;
-    padding-bottom: 40px;
+    padding-bottom: 150px;
 }
 
 .navItem{
@@ -94,11 +94,14 @@ main{
 .board{
     border: 2px solid #000;
     box-shadow: #a1a1a1 5px 5px 20px;
+    width: fit-content;
 }
 
 .grid-container-3x3 {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
+    grid-template-rows: repeat(3, 1fr);
+    width: fit-content;
 }
 
 .grid-item {
@@ -109,10 +112,13 @@ main{
     color: #000;
     border:1px solid #000;
     text-align: center;
-    font-size: 30px;
+    font-size: 25px;
     font-weight: bold;
     padding: 4px;
-    height: 64px;
+    width: 10vw;
+    max-width: 66px;
+    height: 10vw;
+    max-height: 66px;
 }
 
 .numpad .grid-container-3x3{
@@ -129,8 +135,12 @@ main{
     max-height: 0;
 }
 
-.numpad.open{
+.numpadOpen .numpad{
     max-height: 300px;
+}
+
+.numpad .grid-container-3x3{
+    width: auto;
 }
 
 .numpad-cell{
@@ -167,6 +177,11 @@ main{
     text-align: center;
     font-size: 30px;
     outline: none;
+}
+
+.history-btn{
+    cursor: pointer;
+    padding: 5px 15px;
 }
 
 .btn {
@@ -265,7 +280,7 @@ main{
     user-select: none; /* Standard syntax */
   }
 
-@media screen and (min-width: 600px) {
+@media screen and (min-width: 800px) {
 
     .wrapper-center{
         padding: 15px;
@@ -280,7 +295,11 @@ main{
         gap: 25px;
     }
     
-    .sudoku-cell, .numpad-cell{
+    .sudoku-cell{
+        line-height: 50px;
+        width:7vw;
+    }
+    .numpad-cell{
         line-height: 50px;
     }
 
@@ -290,5 +309,31 @@ main{
 
     .bottom{
         position: absolute;
+    }
+}
+
+@media (orientation: landscape) and (max-height: 850px){
+    .grid_1_1 {
+        grid-template-columns: max-content max-content;
+    }
+
+    .grid_1_2.numpadOpen{
+        grid-template-columns: unset;
+    }
+
+    .numpadOpen main{
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 15px;
+    }
+
+    .sudoku-cell{
+        line-height: 8vh;
+        width: 10vh;
+        height: 10vh;
+    }
+
+    .history-btn{
+        width: fit-content;
     }
 }

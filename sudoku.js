@@ -303,9 +303,9 @@ function alertErrors(){
 
 function toggleNumpad(event){
     if(event.target.checked){
-        document.getElementById("numpad").classList.add('open');
+        document.getElementById("main-grid").classList.add('numpadOpen');
     }else{
-        document.getElementById("numpad").classList.remove('open');
+        document.getElementById("main-grid").classList.remove('numpadOpen');
     }
 }
 
