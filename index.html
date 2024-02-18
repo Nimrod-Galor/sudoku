@@ -9,6 +9,7 @@
     <meta name="theme-color" content="#1976d2"/>
     <link rel="icon" type="image/x-icon" href="/icons/favicon.ico">
     <meta name="description" content="Endless Sudoku">
+
     <title>Sudoku</title>
 </head>
 <body>
@@ -163,6 +164,10 @@
                 <div class="navItem grid_1_1">
                     <button id="undoBtn" class="history-btn" onclick="historyUndo()" title="Undo" disabled>Undo</button>
                     <button id="redoBtn" class="history-btn" onclick="historyRedo()" title="Redo" disabled>Redo</button>
+                </div>
+                <div class="navItem">
+                    <label>Elapsed time:</label>
+                    <span id="timer">00:00:00</span>
                 </div>
                 <div class="bottom">
                     <div class="navItem">

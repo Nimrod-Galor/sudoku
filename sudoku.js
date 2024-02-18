@@ -43,6 +43,11 @@ function initGrid(){
     }
 
     generateSudoku();
+
+    if (typeof(timerWorker) != "undefined") {
+        stopWorker();
+    }
+    startWorker();
 }
 
 function generateSudoku(){
@@ -352,3 +357,18 @@ if ('serviceWorker' in navigator) {
     navigator.serviceWorker.register("/serviceworker.js");
 }
  
+let timerWorker;
+
+function startWorker() {
+  if (typeof(timerWorker) == "undefined") {
+    timerWorker = new Worker("timer_workers.js");
+  }
+  timerWorker.onmessage = function(event) {
+    document.getElementById("timer").innerHTML = event.data;
+  };
+}
+
+function stopWorker() {
+    timerWorker.terminate();
+    timerWorker = undefined;
+}
