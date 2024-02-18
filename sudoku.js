@@ -7,6 +7,18 @@ let userInput = {
     historyIndex : -1
 };
 
+class Cell{
+    constructor(row, col, block){
+        this.hide = true;
+        this.row = row;
+        this.col = col;
+        this.block = block;
+        this.options = [1, 2, 3, 4, 5, 6, 7, 8, 9];
+        this.val = '';
+        this.userVal = '';
+    }
+}
+
 function draw(){
     for(let i=0; i < 81; i++){
         if(grid[i].hide === false){
@@ -335,3 +347,8 @@ function highlightCellValue(node){
 }
 
 addEventListener("DOMContentLoaded", (event) => {initGrid()});
+
+if ('serviceWorker' in navigator) {
+    navigator.serviceWorker.register("/serviceworker.js");
+}
+ 
