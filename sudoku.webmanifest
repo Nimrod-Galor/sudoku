@@ -4,6 +4,7 @@
 {
     "name": "Sudoku King",
     "short_name": "Sudoku King",
+    "description": "Endless Sudoku",
     "theme_color": "#1976d2",
     "background_color": "#fafafa",
     "display": "standalone",
