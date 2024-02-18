@@ -35,6 +35,14 @@ function draw(){
 function initGrid(){
     document.getElementById("pyro").style.display = "none";
     grid = [];
+    userInput = {
+        cellIndex : undefined,
+        history : [],
+        historyIndex : -1
+    };
+
+    setHistoryBtnDisable();
+
     for(let i=0; i < 81; i++){
         let row = Math.floor(i / 9);
         let col =  (i % 9);
@@ -44,7 +52,7 @@ function initGrid(){
 
     generateSudoku();
 
-    if (typeof(timerWorker) != "undefined") {
+    if(typeof(timerWorker) != "undefined") {
         stopWorker();
     }
     startWorker();
@@ -117,9 +125,12 @@ function checkSuccess(){
         }
     }
     // success
+    if(typeof(timerWorker) != "undefined") {
+        // stop timer
+        stopWorker();
+    }
     // fireworks
     document.getElementById("pyro").style.display = "block";
-    console.log('success');
 }
 
 function userSelectTile(event){
@@ -269,9 +280,8 @@ function getNextFreeCell(step){
 
 function updateHistory(cellIndex, newValue){
     userInput.history.push({cellIndex, oldValue: grid[cellIndex].userVal, newValue, type: 'history'});
-
     userInput.historyIndex = userInput.history.length - 1;
-    document.getElementById("undoBtn").disabled = false;
+    setHistoryBtnDisable();
 }
 
 function historyUndo(){
@@ -284,10 +294,7 @@ function historyUndo(){
     userInput.history.push({cellIndex, oldValue: newValue, newValue: oldValue, type: 'undo'});
     userInput.historyIndex -= 1;
 
-    if(userInput.historyIndex < 0){
-        document.getElementById("undoBtn").disabled = true;
-    }
-    document.getElementById("redoBtn").disabled = false;
+    setHistoryBtnDisable();
     draw();
 }
 
@@ -300,11 +307,27 @@ function historyRedo(){
     let newValue = userInput.history[userInput.historyIndex].newValue;
     grid[cellIndex].userVal = newValue;
     
-    if(userInput.historyIndex >= userInput.history.length || userInput.history[userInput.historyIndex + 1].type === 'undo'){
-        document.getElementById("redoBtn").disabled = true;
-        //userInput.historyIndex = userInput.history.length - 1;
-    }
+    // if(userInput.historyIndex >= userInput.history.length || userInput.history[userInput.historyIndex + 1].type === 'undo'){
+    //     document.getElementById("redoBtn").disabled = true;
+    //     //userInput.historyIndex = userInput.history.length - 1;
+    // }
+
+    setHistoryBtnDisable();
     draw();
+}
+
+function setHistoryBtnDisable(){
+    if(userInput.historyIndex < 0){
+        document.getElementById("undoBtn").disabled = true;
+    }else{
+        document.getElementById("undoBtn").disabled = false;
+    }
+
+    if(userInput.historyIndex  !== -1 && userInput.historyIndex < userInput.history.length){
+        document.getElementById("redoBtn").disabled = false;
+    }else{
+        document.getElementById("redoBtn").disabled = true;
+    }
 }
 
 function alertErrors(){
