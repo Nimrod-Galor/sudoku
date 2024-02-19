@@ -287,7 +287,11 @@ main{
     -webkit-user-select: none; /* Safari */
     -ms-user-select: none; /* IE 10 and IE 11 */
     user-select: none; /* Standard syntax */
-  }
+}
+
+.printOnly{
+    display: none;
+}
 
 @media screen and (min-width: 800px) {
 
@@ -345,4 +349,26 @@ main{
     .history-btn{
         width: fit-content;
     }
+}
+
+@media print {
+    nav, #numpad, #pyro{
+        display: none;
+    }
+    .wrapper-center{
+        box-shadow: unset;
+        border: 0 none;
+    }
+    #domainLink{
+        display: block;
+        text-align: center;
+        margin: 15px;
+    }
+    a:after {
+        content: "("attr(href)")";
+    }
+}
+
+@page {
+    margin: 2cm;
 }
