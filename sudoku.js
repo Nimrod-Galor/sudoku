@@ -141,6 +141,15 @@ function userSelectTile(event){
 
     userInput.cellIndex = cellIndex;
 
+    // get selected row, block and col
+    let row = Math.floor(cellIndex / 9);
+    let col =  (cellIndex % 9);
+    let block = Math.floor(col / 3) + Math.floor(row / 3) * 3;
+
+    let main = document.getElementById("main");
+    main.classList = "";
+    main.classList.add(`selected-block-${block}`, `selected-row-${row}`, `selected-col-${col}`);
+
     createSelectedTile();
 }
 
@@ -176,12 +185,14 @@ function createSelectedTile(){
 }
 
 function eventTileBlur(event){
+    document.getElementById("main").classList = "";
     event.target.classList.remove("selected");
     event.target.removeEventListener('blur', eventTileBlur);
     event.target.removeEventListener('keydown', eventKeyDown);
 }
 
 function eventCellInputBlur(event){
+    document.getElementById("main").classList = "";
     document.getElementById(`cell-${userInput.cellIndex}`).classList.remove('selected');
     event.target.removeEventListener('keydown', eventKeyDown);
     event.target.removeEventListener('blur', eventCellInputBlur);

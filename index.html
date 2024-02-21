@@ -15,124 +15,124 @@
     <h1>Sudoku</h1>
     <div class="wrapper-center">
         <div id="main-grid" class="grid_1_2">
-            <main>
+            <main id="main">
                 <div id="board" class="board" onclick="userSelectTile(event)">
                     <div class="grid-container-3x3">
-                        <div class="grid-item">
+                        <div class="grid-item block-0">
                             <div class="grid-container-3x3">
-                                <div class="sudoku-cell" id="cell-0" tabindex="0"></div>
-                                <div class="sudoku-cell" id="cell-1" tabindex="0"></div>
-                                <div class="sudoku-cell" id="cell-2" tabindex="0"></div>
-                                <div class="sudoku-cell" id="cell-9" tabindex="0"></div>
-                                <div class="sudoku-cell" id="cell-10" tabindex="0"></div>
-                                <div class="sudoku-cell" id="cell-11" tabindex="0"></div>
-                                <div class="sudoku-cell" id="cell-18" tabindex="0"></div>
-                                <div class="sudoku-cell" id="cell-19" tabindex="0"></div>
-                                <div class="sudoku-cell" id="cell-20" tabindex="0"></div>
+                                <div class="sudoku-cell row-0 col-0" id="cell-0" tabindex="0"></div>
+                                <div class="sudoku-cell row-0 col-1" id="cell-1" tabindex="0"></div>
+                                <div class="sudoku-cell row-0 col-2" id="cell-2" tabindex="0"></div>
+                                <div class="sudoku-cell row-1 col-0" id="cell-9" tabindex="0"></div>
+                                <div class="sudoku-cell row-1 col-1" id="cell-10" tabindex="0"></div>
+                                <div class="sudoku-cell row-1 col-2" id="cell-11" tabindex="0"></div>
+                                <div class="sudoku-cell row-2 col-0" id="cell-18" tabindex="0"></div>
+                                <div class="sudoku-cell row-2 col-1" id="cell-19" tabindex="0"></div>
+                                <div class="sudoku-cell row-2 col-2" id="cell-20" tabindex="0"></div>
                             </div>
                         </div>
-                        <div class="grid-item">
+                        <div class="grid-item block-1">
                             <div class="grid-container-3x3">
-                                <div class="sudoku-cell" id="cell-3" tabindex="0"></div>
-                                <div class="sudoku-cell" id="cell-4" tabindex="0"></div>
-                                <div class="sudoku-cell" id="cell-5" tabindex="0"></div>
-                                <div class="sudoku-cell" id="cell-12" tabindex="0"></div>
-                                <div class="sudoku-cell" id="cell-13" tabindex="0"></div>
-                                <div class="sudoku-cell" id="cell-14" tabindex="0"></div>
-                                <div class="sudoku-cell" id="cell-21" tabindex="0"></div>
-                                <div class="sudoku-cell" id="cell-22" tabindex="0"></div>
-                                <div class="sudoku-cell" id="cell-23" tabindex="0"></div>
+                                <div class="sudoku-cell row-0 col-3" id="cell-3" tabindex="0"></div>
+                                <div class="sudoku-cell row-0 col-4" id="cell-4" tabindex="0"></div>
+                                <div class="sudoku-cell row-0 col-5" id="cell-5" tabindex="0"></div>
+                                <div class="sudoku-cell row-1 col-3" id="cell-12" tabindex="0"></div>
+                                <div class="sudoku-cell row-1 col-4" id="cell-13" tabindex="0"></div>
+                                <div class="sudoku-cell row-1 col-5" id="cell-14" tabindex="0"></div>
+                                <div class="sudoku-cell row-2 col-3" id="cell-21" tabindex="0"></div>
+                                <div class="sudoku-cell row-2 col-4" id="cell-22" tabindex="0"></div>
+                                <div class="sudoku-cell row-2 col-5" id="cell-23" tabindex="0"></div>
                             </div>
                         </div>
-                        <div class="grid-item">
+                        <div class="grid-item block-2">
                             <div class="grid-container-3x3">
-                                <div class="sudoku-cell" id="cell-6" tabindex="0"></div>
-                                <div class="sudoku-cell" id="cell-7" tabindex="0"></div>
-                                <div class="sudoku-cell" id="cell-8" tabindex="0"></div>
-                                <div class="sudoku-cell" id="cell-15" tabindex="0"></div>
-                                <div class="sudoku-cell" id="cell-16" tabindex="0"></div>
-                                <div class="sudoku-cell" id="cell-17" tabindex="0"></div>
-                                <div class="sudoku-cell" id="cell-24" tabindex="0"></div>
-                                <div class="sudoku-cell" id="cell-25" tabindex="0"></div>
-                                <div class="sudoku-cell" id="cell-26" tabindex="0"></div>
+                                <div class="sudoku-cell row-0 col-6" id="cell-6" tabindex="0"></div>
+                                <div class="sudoku-cell row-0 col-7" id="cell-7" tabindex="0"></div>
+                                <div class="sudoku-cell row-0 col-8" id="cell-8" tabindex="0"></div>
+                                <div class="sudoku-cell row-1 col-6" id="cell-15" tabindex="0"></div>
+                                <div class="sudoku-cell row-1 col-7" id="cell-16" tabindex="0"></div>
+                                <div class="sudoku-cell row-1 col-8" id="cell-17" tabindex="0"></div>
+                                <div class="sudoku-cell row-2 col-6" id="cell-24" tabindex="0"></div>
+                               <div class="sudoku-cell row-2 col-7" id="cell-25" tabindex="0"></div>
+                              <div class="sudoku-cell row-2 col-8" id="cell-26" tabindex="0"></div>
+                            </div>
+                       </div>
+                        <div class="grid-item block-3">
+                            <div class="grid-container-3x3">
+                                <div class="sudoku-cell row-3 col-0" id="cell-27" tabindex="0"></div>
+                                <div class="sudoku-cell row-3 col-1" id="cell-28" tabindex="0"></div>
+                                <div class="sudoku-cell row-3 col-2" id="cell-29" tabindex="0"></div>
+                                <div class="sudoku-cell row-4 col-0" id="cell-36" tabindex="0"></div>
+                                <div class="sudoku-cell row-4 col-1" id="cell-37" tabindex="0"></div>
+                                <div class="sudoku-cell row-4 col-2" id="cell-38" tabindex="0"></div>
+                                <div class="sudoku-cell row-5 col-0" id="cell-45" tabindex="0"></div>
+                                <div class="sudoku-cell row-5 col-1" id="cell-46" tabindex="0"></div>
+                                <div class="sudoku-cell row-5 col-2" id="cell-47" tabindex="0"></div>
                             </div>
                         </div>
-                        <div class="grid-item">
+                        <div class="grid-item block-4">
                             <div class="grid-container-3x3">
-                                <div class="sudoku-cell" id="cell-27" tabindex="0"></div>
-                                <div class="sudoku-cell" id="cell-28" tabindex="0"></div>
-                                <div class="sudoku-cell" id="cell-29" tabindex="0"></div>
-                                <div class="sudoku-cell" id="cell-36" tabindex="0"></div>
-                                <div class="sudoku-cell" id="cell-37" tabindex="0"></div>
-                                <div class="sudoku-cell" id="cell-38" tabindex="0"></div>
-                                <div class="sudoku-cell" id="cell-45" tabindex="0"></div>
-                                <div class="sudoku-cell" id="cell-46" tabindex="0"></div>
-                                <div class="sudoku-cell" id="cell-47" tabindex="0"></div>
+                                <div class="sudoku-cell row-3 col-3" id="cell-30" tabindex="0"></div>
+                                <div class="sudoku-cell row-3 col-4" id="cell-31" tabindex="0"></div>
+                                <div class="sudoku-cell row-3 col-5" id="cell-32" tabindex="0"></div>
+                                <div class="sudoku-cell row-4 col-3" id="cell-39" tabindex="0"></div>
+                                <div class="sudoku-cell row-4 col-4" id="cell-40" tabindex="0"></div>
+                                <div class="sudoku-cell row-4 col-5" id="cell-41" tabindex="0"></div>
+                                <div class="sudoku-cell row-5 col-3" id="cell-48" tabindex="0"></div>
+                                <div class="sudoku-cell row-5 col-4" id="cell-49" tabindex="0"></div>
+                                <div class="sudoku-cell row-5 col-5" id="cell-50" tabindex="0"></div>
                             </div>
                         </div>
-                        <div class="grid-item">
+                        <div class="grid-item block-5">
                             <div class="grid-container-3x3">
-                                <div class="sudoku-cell" id="cell-30" tabindex="0"></div>
-                                <div class="sudoku-cell" id="cell-31" tabindex="0"></div>
-                                <div class="sudoku-cell" id="cell-32" tabindex="0"></div>
-                                <div class="sudoku-cell" id="cell-39" tabindex="0"></div>
-                                <div class="sudoku-cell" id="cell-40" tabindex="0"></div>
-                                <div class="sudoku-cell" id="cell-41" tabindex="0"></div>
-                                <div class="sudoku-cell" id="cell-48" tabindex="0"></div>
-                                <div class="sudoku-cell" id="cell-49" tabindex="0"></div>
-                                <div class="sudoku-cell" id="cell-50" tabindex="0"></div>
+                                <div class="sudoku-cell row-3 col-6" id="cell-33" tabindex="0"></div>
+                                <div class="sudoku-cell row-3 col-7" id="cell-34" tabindex="0"></div>
+                                <div class="sudoku-cell row-3 col-8" id="cell-35" tabindex="0"></div>
+                                <div class="sudoku-cell row-4 col-6" id="cell-42" tabindex="0"></div>
+                                <div class="sudoku-cell row-4 col-7" id="cell-43" tabindex="0"></div>
+                                <div class="sudoku-cell row-4 col-8" id="cell-44" tabindex="0"></div>
+                                <div class="sudoku-cell row-5 col-6" id="cell-51" tabindex="0"></div>
+                                <div class="sudoku-cell row-5 col-7" id="cell-52" tabindex="0"></div>
+                                <div class="sudoku-cell row-5 col-8" id="cell-53" tabindex="0"></div>
                             </div>
                         </div>
-                        <div class="grid-item">
+                        <div class="grid-item block-6">
                             <div class="grid-container-3x3">
-                                <div class="sudoku-cell" id="cell-33" tabindex="0"></div>
-                                <div class="sudoku-cell" id="cell-34" tabindex="0"></div>
-                                <div class="sudoku-cell" id="cell-35" tabindex="0"></div>
-                                <div class="sudoku-cell" id="cell-42" tabindex="0"></div>
-                                <div class="sudoku-cell" id="cell-43" tabindex="0"></div>
-                                <div class="sudoku-cell" id="cell-44" tabindex="0"></div>
-                                <div class="sudoku-cell" id="cell-51" tabindex="0"></div>
-                                <div class="sudoku-cell" id="cell-52" tabindex="0"></div>
-                                <div class="sudoku-cell" id="cell-53" tabindex="0"></div>
+                                <div class="sudoku-cell row-6 col-0" id="cell-54" tabindex="0"></div>
+                                <div class="sudoku-cell row-6 col-1" id="cell-55" tabindex="0"></div>
+                                <div class="sudoku-cell row-6 col-2" id="cell-56" tabindex="0"></div>
+                                <div class="sudoku-cell row-7 col-0" id="cell-63" tabindex="0"></div>
+                                <div class="sudoku-cell row-7 col-1" id="cell-64" tabindex="0"></div>
+                                <div class="sudoku-cell row-7 col-2" id="cell-65" tabindex="0"></div>
+                                <div class="sudoku-cell row-8 col-0" id="cell-72" tabindex="0"></div>
+                                <div class="sudoku-cell row-8 col-1" id="cell-73" tabindex="0"></div>
+                                <div class="sudoku-cell row-8 col-2" id="cell-74" tabindex="0"></div>
                             </div>
                         </div>
-                        <div class="grid-item">
+                        <div class="grid-item block-7">
                             <div class="grid-container-3x3">
-                                <div class="sudoku-cell" id="cell-54" tabindex="0"></div>
-                                <div class="sudoku-cell" id="cell-55" tabindex="0"></div>
-                                <div class="sudoku-cell" id="cell-56" tabindex="0"></div>
-                                <div class="sudoku-cell" id="cell-63" tabindex="0"></div>
-                                <div class="sudoku-cell" id="cell-64" tabindex="0"></div>
-                                <div class="sudoku-cell" id="cell-65" tabindex="0"></div>
-                                <div class="sudoku-cell" id="cell-72" tabindex="0"></div>
-                                <div class="sudoku-cell" id="cell-73" tabindex="0"></div>
-                                <div class="sudoku-cell" id="cell-74" tabindex="0"></div>
-                            </div>
-                        </div>
-                        <div class="grid-item">
-                            <div class="grid-container-3x3">
-                                <div class="sudoku-cell" id="cell-57" tabindex="0"></div>
-                                <div class="sudoku-cell" id="cell-58" tabindex="0"></div>
-                                <div class="sudoku-cell" id="cell-59" tabindex="0"></div>
-                                <div class="sudoku-cell" id="cell-66" tabindex="0"></div>
-                                <div class="sudoku-cell" id="cell-67" tabindex="0"></div>
-                                <div class="sudoku-cell" id="cell-68" tabindex="0"></div>
-                                <div class="sudoku-cell" id="cell-75" tabindex="0"></div>
-                                <div class="sudoku-cell" id="cell-76" tabindex="0"></div>
-                                <div class="sudoku-cell" id="cell-77" tabindex="0"></div>
+                                <div class="sudoku-cell row-6 col-3" id="cell-57" tabindex="0"></div>
+                                <div class="sudoku-cell row-6 col-4" id="cell-58" tabindex="0"></div>
+                                <div class="sudoku-cell row-6 col-5" id="cell-59" tabindex="0"></div>
+                                <div class="sudoku-cell row-7 col-3" id="cell-66" tabindex="0"></div>
+                                <div class="sudoku-cell row-7 col-4" id="cell-67" tabindex="0"></div>
+                                <div class="sudoku-cell row-7 col-5" id="cell-68" tabindex="0"></div>
+                                <div class="sudoku-cell row-8 col-3" id="cell-75" tabindex="0"></div>
+                                <div class="sudoku-cell row-8 col-4" id="cell-76" tabindex="0"></div>
+                                <div class="sudoku-cell row-8 col-5" id="cell-77" tabindex="0"></div>
                             </div>            
                         </div>
-                        <div class="grid-item">
+                        <div class="grid-item block-8">
                             <div class="grid-container-3x3">
-                                <div class="sudoku-cell" id="cell-60" tabindex="0"></div>
-                                <div class="sudoku-cell" id="cell-61" tabindex="0"></div>
-                                <div class="sudoku-cell" id="cell-62" tabindex="0"></div>
-                                <div class="sudoku-cell" id="cell-69" tabindex="0"></div>
-                                <div class="sudoku-cell" id="cell-70" tabindex="0"></div>
-                                <div class="sudoku-cell" id="cell-71" tabindex="0"></div>
-                                <div class="sudoku-cell" id="cell-78" tabindex="0"></div>
-                                <div class="sudoku-cell" id="cell-79" tabindex="0"></div>
-                                <div class="sudoku-cell" id="cell-80" tabindex="0"></div>
+                                <div class="sudoku-cell row-6 col-6" id="cell-60" tabindex="0"></div>
+                                <div class="sudoku-cell row-6 col-7" id="cell-61" tabindex="0"></div>
+                                <div class="sudoku-cell row-6 col-8" id="cell-62" tabindex="0"></div>
+                                <div class="sudoku-cell row-7 col-6" id="cell-69" tabindex="0"></div>
+                                <div class="sudoku-cell row-7 col-7" id="cell-70" tabindex="0"></div>
+                                <div class="sudoku-cell row-7 col-8" id="cell-71" tabindex="0"></div>
+                                <div class="sudoku-cell row-8 col-6" id="cell-78" tabindex="0"></div>
+                                <div class="sudoku-cell row-8 col-7" id="cell-79" tabindex="0"></div>
+                                <div class="sudoku-cell row-8 col-8" id="cell-80" tabindex="0"></div>
                             </div>
                         </div>
                     </div>

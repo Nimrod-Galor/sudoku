@@ -35,7 +35,7 @@ self.addEventListener('fetch', event => {
            // update the cache with a clone of the network response
            const responseClone = response.clone();
            //caches.open(url.searchParams.get('name')).then(cache => {
-            caches.open('/').then(cache => {
+            caches.open('*').then(cache => {
              cache.put(event.request, responseClone)
            })
            return response
