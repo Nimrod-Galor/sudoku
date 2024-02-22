@@ -138,7 +138,10 @@ function userSelectTile(event){
     if(grid[cellIndex].hide === false){
         return;
     }
+    updateSelectedTile(cellIndex);
+}
 
+function updateSelectedTile(cellIndex){
     userInput.cellIndex = cellIndex;
 
     // get selected row, block and col
@@ -149,7 +152,6 @@ function userSelectTile(event){
     let main = document.getElementById("main");
     main.classList = "";
     main.classList.add(`selected-block-${block}`, `selected-row-${row}`, `selected-col-${col}`);
-
     createSelectedTile();
 }
 
@@ -161,7 +163,6 @@ function createSelectedTile(){
         // use embeded numpad
         tile.addEventListener('blur', eventTileBlur);
         tile.addEventListener('keydown', eventKeyDown);
-        tile.focus();
         highlightCellValue(tile);
     }else{
         // create input element
@@ -239,17 +240,12 @@ function eventKeyDown(event){
             event.preventDefault();
             return;
     }
-
-    event.target.blur();
-    draw();
 }
 
 function clickNumpad(event){
     console.log(`key: ${event.target.dataset.key}`);
     if(userInput.cellIndex){
         updateValue(event.target.dataset.key);
-        //event.target.blur();
-        draw();
         userInput.cellIndex = undefined;
     }
 }
@@ -258,13 +254,18 @@ function updateValue(val){
     updateHistory( userInput.cellIndex, val);
     grid[userInput.cellIndex].userVal = val;
     document.getElementById(`cell-${userInput.cellIndex}`).classList.remove('selected');
-    //userInput.cellIndex = undefined;
+    event.target.blur();
+    draw();
     checkSuccess();
 }
 
 function getNextFreeCell(step){
     //remove curen selected cell class
-    document.getElementById(`userInput`)?.blur();
+    if(document.getElementById(`userInput`)){
+        document.getElementById(`userInput`).blur();
+    }else{
+        document.getElementById(`cell-${userInput.cellIndex}`).blur();
+    }
     // find next free tile index
     let index = Number(userInput.cellIndex);
     do{
@@ -285,8 +286,7 @@ function getNextFreeCell(step){
         }
     }while(!grid[index].hide || grid[index].userVal != '');
 
-    userInput.cellIndex = index;
-    createSelectedTile();
+    updateSelectedTile(index);
 }
 
 function updateHistory(cellIndex, newValue){
@@ -314,14 +314,8 @@ function historyRedo(){
     userInput.historyIndex += 1;
     // update grid
     let cellIndex = userInput.history[userInput.historyIndex].cellIndex;
-    //let oldValue = userInput.history[userInput.historyIndex].oldValue;
     let newValue = userInput.history[userInput.historyIndex].newValue;
     grid[cellIndex].userVal = newValue;
-    
-    // if(userInput.historyIndex >= userInput.history.length || userInput.history[userInput.historyIndex + 1].type === 'undo'){
-    //     document.getElementById("redoBtn").disabled = true;
-    //     //userInput.historyIndex = userInput.history.length - 1;
-    // }
 
     setHistoryBtnDisable();
     draw();
@@ -383,6 +377,7 @@ function highlightCellValue(node){
     } else {
         console.warn("Could not select text in node: Unsupported browser.");
     }
+    node.focus();
 }
 
 addEventListener("DOMContentLoaded", (event) => {initGrid()});
