@@ -21,12 +21,15 @@ class Cell{
 
 function draw(){
     for(let i=0; i < 81; i++){
+        let tile = document.getElementById(`cell-${i}`);
         if(grid[i].hide === false){
-            document.getElementById(`cell-${i}`).innerHTML = grid[i].val;
+            tile.innerHTML = grid[i].val;
+            tile.classList.add('reveal');
         }else if(grid[i].userVal != ''){
-            document.getElementById(`cell-${i}`).innerHTML = grid[i].userVal;
+            tile.innerHTML = grid[i].userVal;
         }else{
-            document.getElementById(`cell-${i}`).innerHTML = '';
+            tile.innerHTML = '';
+            tile.classList.remove('reveal');
         }
     }
     alertErrors();

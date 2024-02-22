@@ -127,6 +127,10 @@ main{
     max-height: 66px;
 }
 
+.sudoku-cell.reveal{
+    background-color: #efefef;
+}
+
 .numpad .grid-container-3x3{
     margin: 10px 0 0 0;
 }
@@ -175,7 +179,7 @@ main{
 }
 
 .sudoku-cell.selected{
-    border:4px solid gold;
+    border:4px dashed gold;
     background-color: #f5ff97 !important;
     padding: 0;
     box-shadow: #a1a1a1 4px 4px 6px;
