@@ -318,14 +318,23 @@ main{
 .selected-col-8 .col-8{background-color: #def6f6;}
 
 .selected-block-0 .block-0{background-color: #def6f6;}
+.selected-block-0 .block-0 .reveal{background-color: #caf6f6;}
 .selected-block-1 .block-1{background-color: #def6f6;}
+.selected-block-1 .block-1 .reveal{background-color: #caf6f6;}
 .selected-block-2 .block-2{background-color: #def6f6;}
+.selected-block-2 .block-2 .reveal{background-color: #caf6f6;}
 .selected-block-3 .block-3{background-color: #def6f6;}
+.selected-block-3 .block-3 .reveal{background-color: #caf6f6;}
 .selected-block-4 .block-4{background-color: #def6f6;}
+.selected-block-4 .block-4 .reveal{background-color: #caf6f6;}
 .selected-block-5 .block-5{background-color: #def6f6;}
+.selected-block-5 .block-5 .reveal{background-color: #caf6f6;}
 .selected-block-6 .block-6{background-color: #def6f6;}
+.selected-block-6 .block-6 .reveal{background-color: #caf6f6;}
 .selected-block-7 .block-7{background-color: #def6f6;}
+.selected-block-7 .block-7 .reveal{background-color: #caf6f6;}
 .selected-block-8 .block-8{background-color: #def6f6;}
+.selected-block-8 .block-8 .reveal{background-color: #caf6f6;}
 
 
 .printOnly{
