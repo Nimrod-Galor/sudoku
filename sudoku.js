@@ -293,19 +293,38 @@ function getNextFreeCell(step){
 }
 
 function updateHistory(cellIndex, newValue){
-    userInput.history.push({cellIndex, oldValue: grid[cellIndex].userVal, newValue, type: 'history'});
+    if(userInput.historyIndex < userInput.history.length - 1){
+        // inside undo sequence
+        // deeep copy
+        let seqArr = JSON.parse(JSON.stringify(userInput.history));
+        // get undo sequence array
+        seqArr = seqArr.slice(userInput.historyIndex + 1);
+        for(let i = userInput.historyIndex + 1; i <userInput.history.length; i++){
+            let newVal = userInput.history[i].newValue;
+            let oldVal = userInput.history[i].oldValue;
+            userInput.history[i].newValue = oldVal;
+            userInput.history[i].oldValue = newVal;
+        }
+        // insert back to array
+        userInput.history.splice(userInput.history.length + 1 , 0, ...seqArr.reverse());
+    }
+
+    userInput.history.push({cellIndex, oldValue: grid[cellIndex].userVal, newValue});
     userInput.historyIndex = userInput.history.length - 1;
     setHistoryBtnDisable();
 }
 
 function historyUndo(){
+    
     // update grid
     let cellIndex = userInput.history[userInput.historyIndex].cellIndex;
     let oldValue = userInput.history[userInput.historyIndex].oldValue;
     let newValue = userInput.history[userInput.historyIndex].newValue;
     grid[cellIndex].userVal = oldValue;
+    
     // update history
-    userInput.history.push({cellIndex, oldValue: newValue, newValue: oldValue, type: 'undo'});
+    userInput.history[userInput.historyIndex] = {cellIndex, oldValue: newValue, newValue: oldValue};
+
     userInput.historyIndex -= 1;
 
     setHistoryBtnDisable();
@@ -318,7 +337,10 @@ function historyRedo(){
     // update grid
     let cellIndex = userInput.history[userInput.historyIndex].cellIndex;
     let newValue = userInput.history[userInput.historyIndex].newValue;
-    grid[cellIndex].userVal = newValue;
+    let oldValue = userInput.history[userInput.historyIndex].oldValue;
+    grid[cellIndex].userVal = oldValue;
+    // update history
+    userInput.history[userInput.historyIndex] = {cellIndex, oldValue: newValue, newValue: oldValue};
 
     setHistoryBtnDisable();
     draw();
@@ -331,7 +353,7 @@ function setHistoryBtnDisable(){
         document.getElementById("undoBtn").disabled = false;
     }
 
-    if(userInput.historyIndex  !== -1 && userInput.historyIndex < userInput.history.length){
+    if(userInput.history.length  !== -1 && userInput.historyIndex < userInput.history.length - 1){
         document.getElementById("redoBtn").disabled = false;
     }else{
         document.getElementById("redoBtn").disabled = true;
